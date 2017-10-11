@@ -30,7 +30,7 @@ public class Board {
     }
 
     /** Generates the Minefield */
-    public void generateBoard(int row, int column) {
+    public void generateBoard(int row, int column, int mines) {
         // Generate empty board
         mineField = new char[row][column];
         Random random = new Random();
@@ -41,7 +41,8 @@ public class Board {
         }
         // Place mines to mineField
         int minesPlaced = 0;
-        int mines = random.nextInt(row*column);
+        if (mines == 0) mines = random.nextInt(row*column / 2);
+
         while (minesPlaced < mines) {
             int y = random.nextInt(row);
             int x = random.nextInt(column);
