@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -21,25 +22,33 @@ public class Main {
     }
 
     private static void generateMineField() {
-        System.out.print("Please set the width of the board:");
-        Scanner widthInput = new Scanner(System.in);
-        int width = widthInput.nextInt();
-        System.out.print("Please set the height of the board:");
-        Scanner heightInput = new Scanner(System.in);
-        int height = heightInput.nextInt();
-        boolean correctMinesNumber = false;
+        int width = 0;
+        int height = 0;
         int mines = 0;
-        System.out.print("\nPlease set the number of mines, or enter 0 to random:");
-        Scanner minetInput = new Scanner(System.in);
-        while (correctMinesNumber != true) {
-            if (minetInput.nextInt() < width * height) {
-                mines = minetInput.nextInt();
-                correctMinesNumber = true;
-                break;
-            } else {
-                System.out.print(String.format("Too many mines! The maximum number of mines is %d ", width * height));
-                //continue;
+        try {
+            System.out.print("Please set the width of the board:");
+            Scanner widthInput = new Scanner(System.in);
+            width = widthInput.nextInt();
+
+            System.out.print("Please set the height of the board:");
+            Scanner heightInput = new Scanner(System.in);
+            height = heightInput.nextInt();
+
+            boolean correctMinesNumber = false;
+            while (correctMinesNumber != true) {
+                System.out.print("\nPlease set the number of mines, or enter 0 to random:");
+                Scanner minestInput = new Scanner(System.in);
+                mines = minestInput.nextInt();
+                if (mines < width * height -1) {
+                    correctMinesNumber = true;
+                } else {
+                    System.out.print(String.format("Too many mines! The maximum number of mines is %d ", width * height -1));
+                }
             }
+        } catch (InputMismatchException inputmistmatch) {
+            System.out.print(inputmistmatch.getMessage());
+        } catch (IllegalArgumentException illegalarg) {
+            System.out.println(illegalarg.getMessage());
         }
 
         Board board = null;
