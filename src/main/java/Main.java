@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -51,12 +52,19 @@ public class Main {
             System.out.println(illegalarg.getMessage());
         }
 
+        long startTime = System.nanoTime();
         Board board = null;
         board = board.getInstance();
         board.generateBoard(width, height, mines);
         System.out.println(board.toString());
         board.countMines();
         System.out.println(board.toString());
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        double seconds = (double)duration / 1000000000.0;
+        //double seconds = TimeUnit.NANOSECONDS.toSeconds(duration);
+        System.out.println("Time taken to build the minefield: In NanoTime: " + duration + " In Seconds: " + seconds + "\n");
     }
 
     /** <h2> Handles the selection in the menu, return an integer. </h2> */
